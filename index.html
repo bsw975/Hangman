@@ -17,12 +17,9 @@
     <div>
         <h1 id="game">Let's Play Hangman</h1>
         <h2>Current word is</h2>
-        <h3>
-            <span id="guessThis">pending</span>
-        </h3>
-        <h2>Missed letters</h2>
-        <h3>writing row here
-            <span id="letter1">#</span>
+        <h3> <!-- LETTERS of the word, up to TEN! -->
+            <span id="guessThis">not shown</span>
+            <span id="letter1"></span>
             <span id="letter2"></span>
             <span id="letter3"></span>
             <span id="letter4"></span>
@@ -33,6 +30,22 @@
             <span id="letter9"></span>
             <span id="letter10"></span>
         </h3>
+        <h2>Missed letters</h2>
+        <h3 style="align-content: center"> <!-- LETTERS of the word, up to TEN! -->
+            <span id="missed1"></span>
+            <span id="missed2"></span>
+            <span id="missed3"></span>
+            <span id="missed4"></span>
+            <span id="missed5"></span>
+            <span id="missed6"></span>
+            <span id="missed7"></span>
+            <span id="missed8"></span>
+            <span id="missed9"></span>
+            <span id="missed10"></span>
+        </h3>
+        <h2>Wins: <span id="WinCount"></span></h2>
+        <h2>Losses: <span id="LossCount"></h2>
+
 
     </div>
 </body>
