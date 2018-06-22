@@ -1,108 +1,151 @@
-///TO DO - single event handler /Jacob
-// A single series of games is launched once first key is pressed
-// First get main functionality
-// Then remove readystate code below
 
-document.onreadystatechange = function () {
-    if (document.readyState == "complete") {
-        // document is ready. Do your stuff here
+    //Declarations GLOBAL upon page launch
 
-        //Declarations GLOBAL upon page launch
-        function isLetter(str) {
-            return str.length === 1 && str.match(/[a-z]/i);
+// var words = ["cuddlesome", "cupidity", "cynosure", "ebullient"]
+// maybe later add more words or sth
+var inGame = false; // Are we in a game? On load it's a no.
+var gamesWon = 0;
+var gamesLost = 0;
+var words = ["madonna"]
+// var words = ["cud", "dap", "bor", "alm"]
+var wordNumToPlay = Math.floor(Math.random() * words.length);
+var word = words[wordNumToPlay]; // get it from WORDS ARRAY
+var numMissedLetters = 0;
+var allowedMisses = 2;
+var lettersGuessed = [];
+
+function emptyMissed() {
+    // console.log("emptyMissed is being run");
+    for (i = 0; i < 10; i++) {
+        var letterID = "missed" + i;
+        document.getElementById(letterID).textContent = "";
+    }
+}
+function isLetter(str) {
+    return str.length === 1 && str.match(/[a-z]/i);
+}
+function playNewGame() {
+    numMissedLetters = 0;
+    lettersGuessed = [];
+    wordNumToPlay = Math.floor(Math.random() * words.length);
+    word = words[wordNumToPlay]; // get it from WORDS ARRAY
+    // document.getElementById("displayWord").textContent = word;
+    writeEmptyWordBox(word);
+}
+
+function showLetterOrLetters(lett, wrd) { // FUNCTION to show the letter(s) chosen. Called b/c it appears
+    // console.log("function showLetterOrLetters is running with variable lett = " + lett + " and variable wrd " + wrd);
+    var multipleLetterOffset = 0;
+    for (i = 0; i < wrd.length; i++) {
+        console.log("Within the 'for', but before the 'if', i=" + i + " and wrd=" + wrd + " and lett=" + lett + " and wrd.length=" + wrd.length);
+        console.log("wrd.indexOf(lett)=" + wrd.indexOf(lett) + " and lett=" + lett + " and wrd.length=" + wrd.length);
+        var lettID = "letter" + i;
+        console.log(multipleLetterOffset + " is the multOffset");
+        if (wrd.indexOf(lett, multipleLetterOffset) == i) { // letter belongs in position i, write it to the page
+            console.log("Within the if, multOff is " + multipleLetterOffset + "wrd.indexOf(lett, multipleLetterOffset)=" + wrd.indexOf(lett, multipleLetterOffset));
+            document.getElementById(lettID).textContent = lett;
+            multipleLetterOffset = i+1;
         }
+        // document.getElementById(lettID).textContent = lett;
+    } // end for loop updating letter spans
+} // end function
 
-        //Declarations LOCAL
-        //PUT THIS ***********ALL************ IN A FUNCTION?!?!?
-        //
-        // NO, WE HANDLE IT ALL WITHIN THE CLICKHANDLER
+// function showLetterOrLetters(lett, wrd) { // FUNCTION to show the letter(s) chosen. Called b/c it appears
+//     console.log("wrd=" + wrd + " and lett=" + lett + " and wrd.length=" + wrd.length + " and wrd.indexOf(lett)=" + wrd.indexOf(lett));
+//     if (wrd.indexOf(lett) == 0) {document.getElementById("letter0").textContent = lett}
+//     if (wrd.indexOf(lett) == 1) {document.getElementById("letter1").textContent = lett}
+//     if (wrd.indexOf(lett) == 2) {document.getElementById("letter2").textContent = lett}
+// }
 
-        var inGame = false; // This tells whether we're playing or not.
-        var words = ["cud", "dap", "bor", "alm"]
-        // var words = ["cuddlesome", "cupidity", "cynosure", "ebullient"]
-        // maybe later add more words or sth
-        var wordNumToPlay = Math.floor(Math.random() * words.length);
-        console.log(wordNumToPlay)
-        var word = words[wordNumToPlay]; // get it from WORDS ARRAY
-        var gameText = document.getElementById("game").textContent;
-        var numMissedLetters = 0;
-        var allowedMisses = 2;
-        var lettersGuessed = [];
+function wordFilled (wrd) {
+    // var isWordFilled = false; //assume false to start
+    for (i = 0; i < wrd.length; i++) {
+        // console.log("Within the 'for', but before the 'if', i=" + i + " and wrd=" + wrd + " and wrd.length=" + wrd.length);
+        var lettID = "letter" + i;
+        if (wrd[i] == document.getElementById(lettID).textContent) { // str letter on page matches letter in word
+            // console.log("wordFilled if with wrd[i]=" + wrd[i]);
+            // document.getElementById(lettID).textContent = lett;           
+        }
+        else {
+            // console.log("returning false *WITHIN* the else");
+            return false;
+        }
+        // document.getElementById(lettID).textContent = lett;
+    } // end for loop updating letter spans
+    // console.log("returning true *after* the else");
+    return true;
+}
+// FUNCTION to write the blank spaces in the word to the page
+function writeEmptyWordBox(wordToWrite) {
+    // console.log("running writeEmptyWordBox()");
+    for (i = 0; i < wordToWrite.length; i++) {
+        var letterID = "letter" + i;
+        document.getElementById(letterID).textContent = "_";
+    } //end for to createunderscores
 
-        // FUNCTION to write the blank spaces in the word to the page
-        function writeEmptyWordBox(wordToWrite) {
-            for (i = 0; i < wordToWrite; wordToWrite.length) {
-                var letterID = "letter" + i;
-                document.getElementById(letterID).textContent = "_";
-            } //end for to create _ _ _
+    // log numMissedLetters to the missedX spans
+    // for (i = 0; i < allowedMisses; allowedMisses.length) {
+    // var missedID = "missed" + (i + 1);
+    // document.getElementById(missedID).textContent = "_";
+    // } //end for to create _ _ _
+} // end of writeEmptyWordBox function
 
-            // log numMissedLetters to the missedX spans
-            // for (i = 0; i < allowedMisses; allowedMisses.length) {
-                // var missedID = "missed" + (i + 1);
-                // document.getElementById(missedID).textContent = "_";
-            // } //end for to create _ _ _
-        } // end of writeWord function
+// ??? - CSS!!!
+// After user presses a letter do the following
+// 1) Check if letter is pressed. NOT YET DONE
+//   a) If yes check if letter is in word
+document.onkeyup = function (event) {
+    // document.onkeyup fires the function, and passes in the event object
+    if (inGame == false) { //clear the blanks
+        setTimeout(writeEmptyWordBox(word), 666); //empty box after 333ms
+    }
+    var wordText = document.getElementById("letter1").textContent;
+    //local variable for letter that was just pressed
+    
+    console.log("word is " + word)
+    // document.getElementById("displayWord").textContent = word;
+    // document.getElementById("guessThis").textContent = word; //write word to page (now done by writeWord function)
 
-        // ??? - CSS!!!
-        // FUNCTION to play a round
-        function playRound() {
+    //CHECK if a letter is typed!
+    if (isLetter(event.key) && inGame == true) {
+        console.log("Letter " + event.key + " pressed. function isLetter returned true.")
+        if (event.key == "z") { //PRINT INFO TO CONSOLE
+            //WHAT THE HELL IS GOING ON WITH MY CODE!!!
+            console.log("Quick snapshot!");
+            console.log(", allowedMisses is " + allowedMisses + ", word is " + word + ", numMissedLetters is " + numMissedLetters + ", newVar is <SET IT>");
+        }
+        else if (word.indexOf(event.key) > -1) { //letterPresent == true
+            showLetterOrLetters(event.key, word);
+            // UPDATE CSS because the letter is there!
+            if (wordFilled(word)) {// word finished 
+                gamesWon++;
+                setTimeout(document.getElementById("WinCount").textContent = gamesWon, 999); //write wins
+                emptyMissed();
+                setTimeout(alert("You won! Click OK to play a new word. Refresh the page to start over"), 999); //empty box after 333ms
+                playNewGame();
+            }
+        }
+        else if (lettersGuessed.indexOf(event.key) > -1) {
+            //update page instead alert("Letter already guessed");
+        }
+        else { //letterPresent? FALSE, add to missedLetters
+            //add event.key to the lettersGuessed array
+            lettersGuessed.push(event.key);
+            var letterNumToChange = "missed" + (numMissedLetters + 1); // get missed#
+            numMissedLetters++;
+            document.getElementById(letterNumToChange).textContent = event.key; //write missed# to right slot in HTML
+            
+            if (numMissedLetters > allowedMisses) {
+                //end the game
+                setTimeout(alert("You lost! Click OK to play a new word. Refresh the page to start over"), 999); //empty box after 333ms
+                gamesLost++;
+                emptyMissed();
+                document.getElementById("LossCount").textContent = gamesLost; //write losses
+            }
+                //UPDATE CSS ***** to code *****
+        } //end of the if-else to check if letter is in word or not.
+    } //end of the if checking if event.key (what was typed) is a letter
+    
+    inGame = true;
+} //end of the document.onkeyup function, which launches the main evaluation / writing operation
 
-            writeEmptyWordBox(word);
-            // After user presses a letter do the following
-            // 1) Check if letter is pressed. NOT YET DONE
-            //   a) If yes check if letter is in word
-
-
-            document.onkeyup = function (event) {
-                // document.onkeyup fires the function, and passes in the event object
-                inGame = true;
-                var gamesWon = 0;
-                var gamesLost = 0;
-
-                var wordText = document.getElementById("letter1").textContent;
-                //local variable for letter that was just pressed
-
-                document.getElementById("guessThis").textContent = word; //write word to page (now done by writeWord function)
-
-                //CHECK if a letter is typed!
-                if (isLetter(event.key)) {
-                    // alert(st?r + " is a letter")    
-
-                    //CHECK if it was already guessed once! ***** to code *****
-                    if (event.key == "z") { //PRINT INFO TO CONSOLE
-                        //WHAT THE HELL IS GOING ON WITH MY CODE!!!
-                        console.log("Quick snapshot!");
-                        console.log(", gameText is " + gameText + ", word is " + word + ", numMissedLetters is " + numMissedLetters + ", newVar is <SET IT>");
-                    }
-                    else if (word.indexOf(event.key) > -1) { //letterPresent == true
-                        alert("The letter's in the " + (word.indexOf(event.key) + 1) + "th position");
-                        //UPDATE CSS
-
-                        // if word finished ***** to code *****
-                        gamesWon++;
-                    }
-                    else if (lettersGuessed.indexOf(event.key) > -1) {
-                        alert("Letter already guessed");
-                    }
-                    else { //letterPresent? FALSE, add to missedLetters
-                        //add event.key to the lettersGuessed array
-                        lettersGuessed.push(event.key);
-                        var letterNumToChange = "missed" + (numMissedLetters + 1); // get missed#
-                        numMissedLetters++;
-                        if (numMissedLetters > allowedMisses) {
-                            //end the game
-                            gamesLost++;
-                            document.getElementById("LossCount").textContent = gamesLost; //write losses
-                        }
-                        document.getElementById(letterNumToChange).textContent = event.key; //write missed# to right slot in HTML
-                        //UPDATE CSS
-                    } //end of the if-else to check if letter is in word or not.
-                } //end of the if checking if event.key (what was typed) is a letter
-
-            } //end of the document.onkeyup function, which launches the main evaluation / writing operation
-
-        } //end of the playRound function
-        playRound();
-    } // end if where document.readystate = complete
-
-} //end function where document is ready
