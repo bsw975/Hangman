@@ -7,50 +7,49 @@
     <title>HANGMAN - Brett</title>
     <meta name="viewport" content="width=device-width,
     initial-scale=1">
-    <!-- <link rel="stylesheet" type="text/css" media="screen"
-        href="hangman.css" /> -->
+    <link rel="stylesheet" type="text/css" media="screen"
+        href="assets/css/hangman.css" />
     <script src="assets/js/hangman.js"></script>
 </head>
-
 <body>
-    <!-- <h1><span id="currentWord">foo</span></h1>    -->
-    <div>
-        <h1 id="game">Let's Play Hangman</h1>
-        <h2>Press a key to get started. Your current word is <span id="displayWord"></span></h2>
-        <h3> <!-- LETTERS of the word, up to TEN! -->
-            <span id="guessThis"></span>
-            <span id="letter0"></span>
-            <span id="letter1"></span>
-            <span id="letter2"></span>
-            <span id="letter3"></span>
-            <span id="letter4"></span>
-            <span id="letter5"></span>
-            <span id="letter6"></span>
-            <span id="letter7"></span>
-            <span id="letter8"></span>
-            <span id="letter9"></span>
-            <span id="letter10"></span>
-        </h3>
-        <h2>Missed letters</h2>
-        <h3 style="align-content: center"> <!-- LETTERS of the word, up to TEN! -->
-            <span id="missed0"></span>
-            <span id="missed1"></span>
-            <span id="missed2"></span>
-            <span id="missed3"></span>
-            <span id="missed4"></span>
-            <span id="missed5"></span>
-            <span id="missed6"></span>
-            <span id="missed7"></span>
-            <span id="missed8"></span>
-            <span id="missed9"></span>
-            <span id="missed10"></span>
-        </h3>
-        <h2 id="remaining"></h2>
-        <h2>Wins: <span id="WinCount"></span></h2>
-        <h2>Losses: <span id="LossCount"></h2>
-
-
-    </div>
-</body>
-
+        <div id="game-board">
+            <!-- <img src="bg.jpg" height=470 width=450> -->
+            <h1 id="game">Let's Play Hangman</h1>
+            <h4>Press a key to get started. Your current word is <span id="displayWord"></span></h4>
+            <h5> <!-- LETTERS of the word, up to TEN! -->
+                <span id="guessThis"></span>
+                <span id="letter0"></span>
+                <span id="letter1"></span>
+                <span id="letter2"></span>
+                <span id="letter3"></span>
+                <span id="letter4"></span>
+                <span id="letter5"></span>
+                <span id="letter6"></span>
+                <span id="letter7"></span>
+                <span id="letter8"></span>
+                <span id="letter9"></span>
+                <span id="letter10"></span>
+            </h5>
+            <h4>Missed letters</h4>
+            <h5 style="align-content: center"> <!-- LETTERS of the word, up to TEN! -->
+                <span id="missed0"></span>
+                <span id="missed1"></span>
+                <span id="missed2"></span>
+                <span id="missed3"></span>
+                <span id="missed4"></span>
+                <span id="missed5"></span>
+                <span id="missed6"></span>
+                <span id="missed7"></span>
+                <span id="missed8"></span>
+                <span id="missed9"></span>
+                <span id="missed10"></span>
+            </h5>
+            <h4 id="remaining"></h4>
+            <h4>Wins: <span id="WinCount"></span></h4>
+            <h4>Losses: <span id="LossCount"></h4>
+    
+    
+        </div>
+    </body>
+    
 </html>

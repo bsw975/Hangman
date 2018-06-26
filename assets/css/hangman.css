@@ -1,0 +1,18 @@
+body {
+    /* background-color: #cccccc; */
+    /* background-size: auto; */
+    background: url('../img/bg.jpg');
+    background-size: 600px 600px;
+    font-family: 'Copperplate', 'Arial' ;
+}
+
+#game-board {
+    padding: 15px;
+    background: whitesmoke; 
+    position: relative;
+    top: 60px;
+    left: 60px;
+    width: 375px;
+    height: 375px;
+}
+    
