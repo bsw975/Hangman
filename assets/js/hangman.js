@@ -1,3 +1,17 @@
+//***** to code *****
+//***** to code *****
+//***** to code *****
+//***** to code ***** session with Charles
+//***** to code ***** Ctrl-F to navigate
+//***** to code ***** magnifying glass to search directories
+//***** to code *****
+//***** to code ***** how to get organized
+//***** to code *****
+//***** to code ***** working from unsolved folders
+//***** to code *****
+//***** to code *****
+
+//after a loss, clear the completed letters, start new word
 
     //Declarations GLOBAL upon page launch
 
@@ -6,12 +20,13 @@
 var inGame = false; // Are we in a game? On load it's a no.
 var gamesWon = 0;
 var gamesLost = 0;
-var words = ["madonna"]
+// var words = ["jazz", "saucer"]
+var words = ["cuddlesome", "cupidity", "cynosure", "ebullient"]
 // var words = ["cud", "dap", "bor", "alm"]
 var wordNumToPlay = Math.floor(Math.random() * words.length);
 var word = words[wordNumToPlay]; // get it from WORDS ARRAY
 var numMissedLetters = 0;
-var allowedMisses = 2;
+var allowedMisses = 8;
 var lettersGuessed = [];
 
 function emptyMissed() {
@@ -78,6 +93,10 @@ function wordFilled (wrd) {
 // FUNCTION to write the blank spaces in the word to the page
 function writeEmptyWordBox(wordToWrite) {
     // console.log("running writeEmptyWordBox()");
+    for (i = 0; i < 10; i++) {
+        var letterID = "letter" + i;
+        document.getElementById(letterID).textContent = "";
+    }
     for (i = 0; i < wordToWrite.length; i++) {
         var letterID = "letter" + i;
         document.getElementById(letterID).textContent = "_";
@@ -96,16 +115,12 @@ function writeEmptyWordBox(wordToWrite) {
 //   a) If yes check if letter is in word
 document.onkeyup = function (event) {
     // document.onkeyup fires the function, and passes in the event object
+    showLetterOrLetters(event.key, word);
     if (inGame == false) { //clear the blanks
         setTimeout(writeEmptyWordBox(word), 666); //empty box after 333ms
     }
     var wordText = document.getElementById("letter1").textContent;
     //local variable for letter that was just pressed
-    
-    console.log("word is " + word)
-    // document.getElementById("displayWord").textContent = word;
-    // document.getElementById("guessThis").textContent = word; //write word to page (now done by writeWord function)
-
     //CHECK if a letter is typed!
     if (isLetter(event.key) && inGame == true) {
         console.log("Letter " + event.key + " pressed. function isLetter returned true.")
@@ -114,32 +129,39 @@ document.onkeyup = function (event) {
             console.log("Quick snapshot!");
             console.log(", allowedMisses is " + allowedMisses + ", word is " + word + ", numMissedLetters is " + numMissedLetters + ", newVar is <SET IT>");
         }
-        else if (word.indexOf(event.key) > -1) { //letterPresent == true
-            showLetterOrLetters(event.key, word);
+        else if (word.indexOf(event.key) > -1) { //The letter pressed is in the word
+            // letterPresent == true
+            // testing with Charlie!! showLetterOrLetters(event.key, word);
             // UPDATE CSS because the letter is there!
-            if (wordFilled(word)) {// word finished 
+            if (wordFilled(word)) {// this is the ***WIN CHECK*** function - returns true when word is finished 
                 gamesWon++;
-                setTimeout(document.getElementById("WinCount").textContent = gamesWon, 999); //write wins
-                emptyMissed();
-                setTimeout(alert("You won! Click OK to play a new word. Refresh the page to start over"), 999); //empty box after 333ms
+                setTimeout(document.getElementById("WinCount").textContent = gamesWon, 999); //UPDATE WINS: 
+                emptyMissed(); 
+                setTimeout(alert("You won! Click OK to play a new word. Refresh the page to start over"), 999); //empty box after 999ms
                 playNewGame();
             }
         }
         else if (lettersGuessed.indexOf(event.key) > -1) {
             //update page instead alert("Letter already guessed");
+            // I DON'T KNOW WHAT THIS ELSE IF IS DOING
         }
-        else { //letterPresent? FALSE, add to missedLetters
+        else { //We have a bad guess. Update missed letters array lettersGuessed
             //add event.key to the lettersGuessed array
             lettersGuessed.push(event.key);
             var letterNumToChange = "missed" + (numMissedLetters + 1); // get missed#
+            document.getElementById("remaining").textContent =
+                "You have only " + (allowedMisses - numMissedLetters) +
+                " guesses remaining before you hang your man!!";
             numMissedLetters++;
-            document.getElementById(letterNumToChange).textContent = event.key; //write missed# to right slot in HTML
-            
+            var preGuessBadLetters = document.getElementById(letterNumToChange).textContent;
+            //Below we update the Missed Letters html
+            document.getElementById(letterNumToChange).textContent = event.key;
             if (numMissedLetters > allowedMisses) {
                 //end the game
-                setTimeout(alert("You lost! Click OK to play a new word. Refresh the page to start over"), 999); //empty box after 333ms
+                setTimeout(alert("You lost! The word was, **" + word + "**. Click OK to play a new word. Refresh the page to start over"), 999); //empty box after 333ms
                 gamesLost++;
                 emptyMissed();
+                playNewGame();
                 document.getElementById("LossCount").textContent = gamesLost; //write losses
             }
                 //UPDATE CSS ***** to code *****
