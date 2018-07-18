@@ -1,5 +1,5 @@
 # Hangman
-https://bsw975.github.io/Hangman/
+[Play here!](https://bsw975.github.io/Hangman/)
 
 Create a word-guess game, often called hangman. The object is to choose letters that will appear in the word without choosing too many wrong letters. The man in the noose is drawn in 5-10 steps, once for each wrong letter. Guess the word correctly before the man is hanged!
 
